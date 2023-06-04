@@ -39,7 +39,7 @@ def main():
             st.session_state.conversation = get_conversation_chain(vectorstore)
 
 
-    user_question = st.text_input("Enter your question about the files: ")
+    user_question = st.text_input("Enter your question about the files:  💬")
     if user_question:
         handle_user_input(user_question)
 
