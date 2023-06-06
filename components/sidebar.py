@@ -8,10 +8,9 @@ def sidebar():
 
         ---
         ## How to use 🧐
-        1. Upload your PDF files
+        1. Upload your files. Supported formats are PDF, DOCX, and TXT.
         2. **Click Submit before asking questions**
         3. Ask your questions in the text box, and continue the chat for further questions
-        4. You can ask it "What sources did you use?" to see the list of sources it used to answer your question.
 
         ## How to optimize the results :brain:
         Ask questions like 'Where did you get this information from?', 'What sources did you use?', etc, to see the list of sources it used to answer your question.

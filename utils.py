@@ -1,6 +1,7 @@
 import streamlit as st
 from dotenv import load_dotenv 
 from PyPDF2 import PdfReader
+import docx2txt
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
@@ -15,6 +16,14 @@ def get_pdf_text(pdf_docs):
         pdf_reader = PdfReader(pdf_doc)
         for page in pdf_reader.pages:
             text += page.extract_text()
+    return text
+
+def get_docx_text(docx_docs):
+    text = docx2txt.process(docx_docs)
+    return text
+
+def get_txt_text(txt_docs):
+    text = txt_docs.read().decode("utf-8")
     return text
 
 def get_text_chunks(raw_text):

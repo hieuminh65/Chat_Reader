@@ -5,6 +5,8 @@ from html_css import css, bot_template, user_template
 
 from utils import (
     get_pdf_text,
+    get_docx_text,
+    get_txt_text,
     get_text_chunks,
     get_vectorstore,
     get_conversation_chain,
@@ -23,12 +25,18 @@ def main():
 
     st.title("Chat with multiples files 🎓")
 
-    pdf_docs = st.file_uploader("Upload your PDF files", type = ["pdf"], accept_multiple_files=True)
+    docs = st.file_uploader("Upload your PDF files", type = ["pdf","docx", "txt"], accept_multiple_files=True)
     if st.button("Submit"):
         with st.spinner("Processing..."):
             #get the pdf text
-            raw_text = get_pdf_text(pdf_docs)
-
+            raw_text = ""
+            for doc in docs:
+                if doc.name.endswith(".pdf"):
+                    raw_text += get_pdf_text(doc)
+                elif doc.name.endswith(".docx"):
+                    raw_text += get_docx_text(doc)
+                elif doc.name.endswith(".txt"):
+                    raw_text += get_txt_text(doc)
             #split text into chunks
             chunks = get_text_chunks(raw_text)
             
