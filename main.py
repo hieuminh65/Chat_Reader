@@ -25,7 +25,7 @@ def main():
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = None
 
-    st.button("Analyze data with CSV files")
+    # st.button("Analyze data with CSV files")
     docs = st.file_uploader("Upload your files", type = ["pdf","docx", "txt", "csv"], accept_multiple_files=True)
     
     csv_key = 0
