@@ -2,12 +2,14 @@ import streamlit as st
 from dotenv import load_dotenv 
 from PyPDF2 import PdfReader
 import docx2txt
+from langchain.agents import create_csv_agent
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
+from langchain.llms import OpenAI
 from html_css import css, bot_template, user_template
 
 def get_pdf_text(pdf_docs):
@@ -25,6 +27,11 @@ def get_docx_text(docx_docs):
 def get_txt_text(txt_docs):
     text = txt_docs.read().decode("utf-8")
     return text
+
+def get_csv_answer(csv_docs, question):
+    agent = create_csv_agent(OpenAI(temperature=0.3), csv_docs, verbose=True)
+    answer = agent.run(question)
+    return answer
 
 def get_text_chunks(raw_text):
     text_splitter = CharacterTextSplitter(
@@ -56,8 +63,10 @@ def get_conversation_chain(vectorstore):
     return conversation_chain
 
 def handle_user_input(user_question):
+
     response = st.session_state.conversation({'question' : user_question})
     st.session_state.chat_history = response['chat_history']
+
 
     for i,message in enumerate(st.session_state.chat_history):
         if i % 2 == 0:
